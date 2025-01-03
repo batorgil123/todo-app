@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  width: 377px;
+  border-radius: 5px;
+  margin-left: 40%;
+  border-style: solid;
 }
 
 .App-logo {
@@ -35,4 +39,37 @@
   to {
     transform: rotate(360deg);
   }
+}
+.list {
+  background-color: blueviolet;
+}
+.title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.025em;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.buttons{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color:#F3F4F6;
+  border-radius: 4px;
+  border-style: none;
+  height: 32px;
+}
+.input-1{
+  font-family: Arial, Helvetica, sans-serif;
+  width: 280px;
+  height: 40px;
+  border-radius: 8px;
+}
+.add-button{
+  font-family: Arial, Helvetica, sans-serif;
+  width: 59px;
+  height: 40px;
+  background-color: #3C82F6;
+  border-radius: 8px;
 }
