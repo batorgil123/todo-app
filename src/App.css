@@ -1,9 +1,14 @@
 .App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   width: 377px;
   border-radius: 5px;
   margin-left: 40%;
   border-style: solid;
+  border-width: 3px;
+  border-color: whitesmoke;
 }
 
 .App-logo {
@@ -27,21 +32,16 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .list {
-  background-color: blueviolet;
+  background-color:  #F3F4F6;
+  width: 345px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }
 .title {
   font-family: Arial, Helvetica, sans-serif;
@@ -52,24 +52,115 @@
   text-align: center;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
+  margin: 0px;
+  margin-bottom: 20px;
 }
-.buttons{
+.button-ALL{
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: 550;
+  letter-spacing: 1px;
   background-color:#F3F4F6;
   border-radius: 4px;
   border-style: none;
   height: 32px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-ACTIVE{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 550;
+  letter-spacing: 1px;
+  background-color:#F3F4F6;
+  border-radius: 4px;
+  border-style: none;
+  height: 32px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-Completed{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 550;
+  letter-spacing: 1px;
+  background-color:#F3F4F6;
+  border-radius: 4px;
+  border-style: none;
+  height: 32px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .input-1{
   font-family: Arial, Helvetica, sans-serif;
   width: 280px;
   height: 40px;
-  border-radius: 8px;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  border-color:#E4E4E7;
+  text-align: center;
+  padding: 0px;
+  margin-right: 6px;
+}
+.input-1::placeholder{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
 }
 .add-button{
+  margin: 0px;
   font-family: Arial, Helvetica, sans-serif;
   width: 59px;
   height: 40px;
   background-color: #3C82F6;
   border-radius: 8px;
+  border-style: none;
+  color: white;
+}
+.Delete{
+  background-color: #d5d5d5;
+  color: red;
+  width: 67px;
+  height: 30px;
+  display: flex;
+  border-style: none;
+  border-radius: 7px;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+.Delete:hover{
+  background-color: rgb(114, 134, 152);
+}
+.bottom-title{
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+.buttons-container{
+  display: flex;
+  width: 345px;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.input-container{
+  margin-top: 20px;
+}
+.error{
+  color:  #6B7280;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.list-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.list-text{
+  font-family: Arial, Helvetica, sans-serif;
 }
