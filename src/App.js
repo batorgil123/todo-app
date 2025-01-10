@@ -18,17 +18,14 @@ function App() {
       return;
     } else {
       setError("");
-      setTodo([...todo, { text: inputValue, id: uuidv4(), status: "ACTIVE"}]);
+      setTodo([...todo, { text: inputValue, id: uuidv4(), status: "ACTIVE" }]);
       setInputValue("");
     }
   };
 
   const HandleCheckbox = (id) => {
-
     setTodo((prevTodos) =>
-      prevTodos.map((i) => 
-        i.id === id ? { ...i, status: "COMPLETED" } : i
-      )
+      prevTodos.map((i) => (i.id === id ? { ...i, status: "COMPLETED" } : i))
     );
   };
 
@@ -41,9 +38,9 @@ function App() {
     setFilterState(state);
   };
 
-  const logActivity = () => {
+  const logActivity = (id,status) => {
     const time = new Date().toLocaleString();
-    console.log(time);
+    console.log(id,status, time);
   };
 
   const filteredTodos = todo.filter((item) => {
@@ -62,33 +59,26 @@ function App() {
           value={inputValue}
           onChange={Handleinput}
         />
-        <button className="add-button" onClick={HandleAdd,logActivity}>
+        <button className="add-button" onClick={event=>{HandleAdd();logActivity(inputValue,"Added");}}>
           Add
         </button>
       </div>
 
       <div className="buttons-container">
-        <button onClick={() => handlefilterstate("ALL"),logActivity} className="button-ALL">
+        <button onClick={()=>handlefilterstate("ALL")} className="button-ALL">
           All
         </button>
-        <button
-          onClick={() => handlefilterstate("ACTIVE"),logActivity}
-          className="button-ACTIVE"
-        >
+        <button onClick={()=>handlefilterstate("ACTIVE")} className="button-ACTIVE">
           Active
         </button>
         <button
-          onClick={() => handlefilterstate("COMPLETED"),logActivity}
+          onClick={()=>handlefilterstate("COMPLETED")}
           className="button-Completed"
         >
           Completed
         </button>
-        <button className="activity-log-button" onClick={logActivity}>
-         Log
-      </button>
+        <button className="activity-log-button">Log</button>
       </div>
-
-     
 
       {error.length > 1 && <div className="error">{error}</div>}
 
@@ -99,11 +89,20 @@ function App() {
               <input
                 className="checkboxes"
                 type="checkbox"
-                onChange={() => HandleCheckbox(todo.id)}
+                onChange={(event) => {
+                  HandleCheckbox(todo.id);
+                  logActivity(todo.id,"Status Changed into:");
+                }}
               />
               <div className="list-text">{todo.text}</div>
             </div>
-            <button onClick={() => handleDelete(todo.id),logActivity} className="Delete">
+            <button
+              onClick={(event) => {
+                handleDelete(todo.id);
+                logActivity(todo.id,"Deleted");
+              }}
+              className="Delete"
+            >
               Delete
             </button>
           </div>
