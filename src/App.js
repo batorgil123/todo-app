@@ -7,7 +7,9 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("No tasks yet. Add one above!");
   const [filterState, setFilterState] = useState("ALL");
-  let a = [];
+  const [logs, setLogs] = useState([]); 
+  const [showLogs, setShowLogs] = useState(false); 
+
   const Handleinput = (event) => {
     setInputValue(event.target.value);
   };
@@ -16,31 +18,41 @@ function App() {
     if (inputValue.length === 0) {
       setError("No tasks yet. Add one above!");
       return;
-    } else {
-      setError("");
-      setTodo([...todo, { text: inputValue, id: uuidv4(), status: "ACTIVE" }]);
-      setInputValue("");
     }
+    setError("");
+    const newTask = { text: inputValue, id: uuidv4(), status: "ACTIVE" };
+    setTodo([...todo, newTask]);
+    logActivity(newTask.id, "Added");
+    setInputValue("");
   };
 
   const HandleCheckbox = (id) => {
     setTodo((prevTodos) =>
-      prevTodos.map((i) => (i.id === id ? { ...i, status: "COMPLETED" } : i))
+      prevTodos.map((task) =>
+        task.id === id
+          ? { ...task, status: task.status === "ACTIVE" ? "COMPLETED" : "ACTIVE" }
+          : task
+      )
     );
+    logActivity(id, "Marked as Completed");
   };
 
   const handleDelete = (id) => {
-    const newTodos = todo.filter((item) => item.id !== id);
-    setTodo(newTodos);
+    setTodo(todo.filter((item) => item.id !== id));
+    logActivity(id, "Deleted");
   };
 
-  const handlefilterstate = (state) => {
+  const handleFilterState = (state) => {
     setFilterState(state);
   };
 
-  const logActivity = (id,status) => {
+  const logActivity = (id, action) => {
     const time = new Date().toLocaleString();
-    console.log(id,status, time);
+    setLogs((prevLogs) => [...prevLogs, `${time} - Task ${id} ${action}`]);
+  };
+
+  const toggleLogs = () => {
+    setShowLogs(!showLogs); 
   };
 
   const filteredTodos = todo.filter((item) => {
@@ -52,63 +64,62 @@ function App() {
   return (
     <div className="App">
       <div className="input-container">
-        <p className="title">To-Do list</p>
+        <p className="title">To-Do List</p>
         <input
           className="input-1"
           placeholder="Add a new task..."
           value={inputValue}
           onChange={Handleinput}
         />
-        <button className="add-button" onClick={event=>{HandleAdd();logActivity(inputValue,"Added");}}>
+        <button className="add-button" onClick={HandleAdd}>
           Add
         </button>
       </div>
 
       <div className="buttons-container">
-        <button onClick={()=>handlefilterstate("ALL")} className="button-ALL">
+        <button onClick={() => handleFilterState("ALL")} className="button-ALL">
           All
         </button>
-        <button onClick={()=>handlefilterstate("ACTIVE")} className="button-ACTIVE">
+        <button onClick={() => handleFilterState("ACTIVE")} className="button-ACTIVE">
           Active
         </button>
-        <button
-          onClick={()=>handlefilterstate("COMPLETED")}
-          className="button-Completed"
-        >
+        <button onClick={() => handleFilterState("COMPLETED")} className="button-Completed">
           Completed
         </button>
-        <button className="activity-log-button">Log</button>
+        <button onClick={toggleLogs} className="activity-log-button">
+          {showLogs ? "Hide Logs" : "Show Logs"}
+        </button>
       </div>
 
       {error.length > 1 && <div className="error">{error}</div>}
 
-      {filteredTodos.map((todo) => {
-        return (
-          <div key={todo.id} className="list">
-            <div className="list-item">
-              <input
-                className="checkboxes"
-                type="checkbox"
-                onChange={(event) => {
-                  HandleCheckbox(todo.id);
-                  logActivity(todo.id,"Status Changed into:");
-                }}
-              />
-              <div className="list-text">{todo.text}</div>
-            </div>
-            <button
-              onClick={(event) => {
-                handleDelete(todo.id);
-                logActivity(todo.id,"Deleted");
-              }}
-              className="Delete"
-            >
-              Delete
-            </button>
+      {filteredTodos.map((todo) => (
+        <div key={todo.id} className="list">
+          <div className="list-item">
+            <input
+              className="checkboxes"
+              type="checkbox"
+              checked={todo.status === "COMPLETED"}
+              onChange={() => HandleCheckbox(todo.id)}
+            />
+            <div className="list-text">{todo.text}</div>
           </div>
-        );
-      })}
-      <p className="bottom-title">Powered by Pinecone academy</p>
+          <button onClick={() => handleDelete(todo.id)} className="Delete">
+            Delete
+          </button>
+        </div>
+      ))}
+      {showLogs && (
+        <div className="log-section">
+          <ul>
+            {logs.length === 0 ? <p>No actions yet.</p> : logs.map((log, index) => (
+              <li key={index}>{log}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <p className="bottom-title">Powered by Pinecone Academy</p>
     </div>
   );
 }
